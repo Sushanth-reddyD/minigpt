@@ -141,10 +141,10 @@ class TestMultiHeadAttention:
         assert x.grad.shape == (2, 5, 16)
 
     def test_dropout_active_in_train(self):
-        cfg = make_small_cfg(drop_rate=0.99)
+        cfg = make_small_cfg(emb_dim=64, n_heads=4, drop_rate=0.5)
         mha = MultiHeadAttention(cfg)
         mha.train()
-        x = torch.randn(1, 5, 16)
+        x = torch.randn(4, 20, 64)
         out1 = mha(x)
         out2 = mha(x)
         assert not torch.equal(out1, out2)

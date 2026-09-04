@@ -117,10 +117,10 @@ class TestTransformerBlock:
         assert (x.grad.abs() > 0).all()
 
     def test_dropout_train_vs_eval(self):
-        cfg = make_small_cfg(drop_rate=0.99)
+        cfg = make_small_cfg(emb_dim=64, n_heads=4, drop_rate=0.5)
         block = TransformerBlock(cfg)
 
-        x = torch.randn(1, 5, 16)
+        x = torch.randn(4, 20, 64)
 
         block.train()
         out_train1 = block(x)
