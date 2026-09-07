@@ -3,3 +3,4 @@ pytest
 tiktoken
 jupyter
 matplotlib
+transformers
