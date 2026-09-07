@@ -1,3 +1,5 @@
+import math
+
 import torch
 import torch.nn as nn
 
@@ -18,6 +20,17 @@ class GPTModel(nn.Module):
         self.lm_head = nn.Linear(cfg["emb_dim"], cfg["vocab_size"], bias=False)
 
         self.lm_head.weight = self.tok_emb.weight
+
+        self.apply(self._init_weights)
+
+    def _init_weights(self, module):
+        std = 0.02
+        if isinstance(module, nn.Linear):
+            torch.nn.init.normal_(module.weight, mean=0.0, std=std)
+            if module.bias is not None:
+                torch.nn.init.zeros_(module.bias)
+        elif isinstance(module, nn.Embedding):
+            torch.nn.init.normal_(module.weight, mean=0.0, std=std)
 
     def forward(self, token_ids):
         batch, seq = token_ids.shape
