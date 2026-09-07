@@ -2,3 +2,4 @@ torch
 pytest
 tiktoken
 jupyter
+matplotlib
